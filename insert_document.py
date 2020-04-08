@@ -9,17 +9,6 @@ logger = getLogger(__name__)
 basicConfig(level=INFO)
 
 
-def update_person_id(document_ids):
-
-    
-    new_land_registrations = SampleData.LAND_REGISTRATION.copy()
-    for i in range(len(SampleData.PERSON)):
-        
-        registration = new_land_registrations[i]
-        
-        registration['Owners'].update({'PersonId': str(document_ids[i])})
-    return  new_land_registrations
-
 
 def insert_documents(transaction_executor, table_name, documents):
    
@@ -31,15 +20,6 @@ def insert_documents(transaction_executor, table_name, documents):
     return list_of_document_ids
 
 
-# def update_and_insert_documents(transaction_executor,table_name,data):
-   
-#     list_ids = insert_documents(transaction_executor, Constants.PERSON_TABLE_NAME, SampleData.PERSON)
-
-#     logger.info("Records for the table "+ table_name +)
-#     new_registrations = update_person_id(list_ids)
-
-#     insert_documents(transaction_executor, Constants.LAND_TABLE_NAME, SampleData.LAND)
-#     insert_documents(transaction_executor, Constants.LAND_REGISTRATION_TABLE_NAME, new_registrations)
     
 
 def insert(table_name,data):
