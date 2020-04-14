@@ -11,6 +11,8 @@ from rest_framework.response import Response
 # from .models import Task
 from constants import Constants
 import boto3 
+import json
+import ast
 client = boto3.client('qldb')
 
 @api_view(['GET'])
@@ -27,8 +29,19 @@ def apiOverview(request):
 
 @api_view(['POST'])
 def CreateLedger(request):
+    
+    data=request.data
+    data =data.dict()
+    # print(data)
+    data=ast.literal_eval(data['data'])
+    # print(data)
+    # print(type(ast.literal_eval(data)))
+    data = ast.literal_eval(data)
+    
+
+    
     response = client.create_ledger(
-        Name=request.data['Name'],
+        Name=data['Name'],
         Tags={
             'string': 'string'
         },
@@ -45,7 +58,12 @@ def CreateLedger(request):
 def CreateTable(request):
     # ledgername = request.data['Ledgername']
     # Constants.LEDGERNAME=ledgername
-    response = create(request.data['Tablename'])
+    data=request.data
+    data =data.dict()
+    data=ast.literal_eval(data['data'])
+    data = ast.literal_eval(data)
+    
+    response = create(data['Tablename'])
     # {
     #     "Ledgername":"Rec",
     #     "Tablename":"Person",
@@ -66,7 +84,11 @@ def insertRecords(request):
     #         }
     #     ]
     # }
-    response = insert(request.data["tablename"],request.data["data"])
+    data=request.data
+    data =data.dict()
+    data=ast.literal_eval(data['data'])
+    data = ast.literal_eval(data)
+    response = insert(data["tablename"],data["data"])
     return Response(response)
 
 @api_view(['POST'])
@@ -78,7 +100,13 @@ def updateRecords(request):
     #             "field":"firstname","oldrecord":"qwer","newrecord":"surya"
     #             }
     # }
-    response = update(request.data["tablename"],request.data["data"])
+    # data="{'tablename':'Person','data':{'field':'firstname','oldrecord':'surya','newrecord':'munirathinam'}}"
+    
+    data=request.data
+    data =data.dict()
+    data=ast.literal_eval(data['data'])
+    data = ast.literal_eval(data)
+    response = update(data["tablename"],data["data"])
     return Response(response)
 
 @api_view(['POST'])
@@ -90,6 +118,11 @@ def revisionHistory(request):
     #             }
 
     # }
-    response = getHistory(request.data["tablename"],request.data["data"])
+    # data="{'tablename':'person','data':{'field':'firstname','searchrecord':'munirathinam'}}"
+    data=request.data
+    data =data.dict()
+    data=ast.literal_eval(data['data'])
+    data = ast.literal_eval(data)
+    response = getHistory(data["tablename"],data["data"])
     return Response(response)
 
