@@ -1,0 +1,120 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "QlDB_api",
+    "version": "1.0",
+    "description": "Qldb api for dynamically create table and ledgers."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8081/api"
+    }
+  ],
+  "paths": {
+    "/apioverview": {
+      "get": {
+        "summary": "API Overview",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "Displays the functionalities of the api "
+          }
+        },
+        "operationId": "get-apioverview",
+        "description": "Details about all the functionalities this api provides"
+      }
+    },
+    "/createledger/": {
+      "post": {
+        "summary": "Create Ledger",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "Ledger Successfully created"
+          },
+          "500": {
+            "description": "Ledger Limit Exceeded"
+          }
+        },
+        "operationId": "post-createledger",
+        "description": "Create Ledger by specified name\n\ndata=\"{'Name':'LedgerName'}\"",
+        "requestBody": {
+          "description": ""
+        },
+        "parameters": []
+      },
+      "parameters": []
+    },
+    "/createtable/": {
+      "post": {
+        "summary": "Create Table",
+        "tags": [],
+        "operationId": "post-createtable",
+        "description": "create table with specified table  inside the ledger\ndata=\"{'Tablename':'tablename'}\"\n",
+        "requestBody": {
+          "description": ""
+        },
+        "responses": {
+          "200": {
+            "description": "Table Created Successfully "
+          },
+          "500": {
+            "description": "Table Creation Error"
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/insertrecords/": {
+      "post": {
+        "summary": "Insert Records",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "Successfully Inserted "
+          },
+          "500": {
+            "description": "Records insersion error"
+          }
+        },
+        "operationId": "post-insertrecords",
+        "requestBody": {},
+        "description": "add records to the specified table\n\ndata=\"{'tablename':'person','data':[{'firstname':'surya'},{'firstname':'sarath'}]}\""
+      },
+      "parameters": []
+    },
+    "/updaterecords/": {
+      "post": {
+        "summary": "Update Records",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "Records updated Successfully "
+          },
+          "500": {
+            "description": "Error in updation of the records"
+          }
+        },
+        "operationId": "post-updaterecords",
+        "description": "\nupdate the contents of the table by specifing old record and the field\ndata=\"{'tablename':'Person','data':{'field':'firstname','oldrecord':'surya','newrecord':'munirathinam'}}\""
+      }
+    },
+    "/gethistory/": {
+      "post": {
+        "summary": "Get Revision History",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "successfully displayed the revision history "
+          },
+          "500": {
+            "description": "Unable to retrive the contents of the ledger"
+          }
+        },
+        "operationId": "post-gethistory",
+        "description": "Gives the revision history of the field\nspecify the table record name or row no to get the revision history\ndata=\"{'tablename':'person','data':{'field':'firstname','searchrecord':'munirathinam'}}\""
+      },
+      "parameters": []
+    }
+  }
+}

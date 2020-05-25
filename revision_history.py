@@ -9,10 +9,6 @@ logger = getLogger(__name__)
 basicConfig(level=INFO)
 
 
-# def format_date_time(date_time):
-    
-#     return date_time.strftime('`%Y-%m-%dT%H:%M:%S.%fZ`')
-
 
 def docHistory(transaction_executor, tablename,data):
  
